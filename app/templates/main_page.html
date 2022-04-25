@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+    {% for post in posts %}
+        <div class="mx-auto" style="width: 80%;">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{db.query.filter_by(id=post.user).first().nickname}}</h5>
+                    {% if post.dtype == "jpg" %}
+                        <img src="data:image/jpg;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
+                    {% else %}
+                        <img src="data:image/png;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
+                    {% endif %}
+                    <h4 style="margin-top: 7px;">{{post.text}}</h4>
+                    <a class="btn btn-outline-dark" href="/add_comment/{{post.id}}">Write a comment or read them</a>
+                </div>
+            </div>
+          </div>
+    {% endfor %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if db.query.filter_by(nickname=name).all() and current_user.nickname != name %}
+    {% for i in db.query.filter_by(nickname=name) %}
+    <div class="mx-auto" style="width: 80%;">
+        <div class="card">
+          <div class="card-body">
+              <h5><a href="/other_user/{{i.id}}">{{ i.nickname }}</a></h5>
+              <h5>Name: {{ i.name }}</h5>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+<h1 style="text-align: center;">No results!</h1>
+{% endif %}
+{% endblock %}
