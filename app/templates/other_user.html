@@ -5,9 +5,9 @@
     <div class="card">
       <div class="card-body">
           {% if user.avatar_dtype == "jpg" %}
-            <img src="data:image/jpg;base64,{{ user.avatar }}" class="img-fluid">
+            <img src="data:image/jpg;base64,{{ user.avatar }}" class="img-fluid" style="margin-bottom: 5px;">
           {% else %}
-            <img src="data:image/png;base64,{{ user.avatar }}" class="img-fluid">
+            <img src="data:image/png;base64,{{ user.avatar }}" class="img-fluid" style="margin-bottom: 5px;">
           {% endif %}
           <h5>{{ user.nickname }}</h5>
           <h5>Name: {{ user.name }}</h5>
@@ -22,15 +22,15 @@
     </div>
 </div>
 {% for post in posts.query.filter_by(user=user_id).all() %}
-<div class="mx-auto" style="width: 80%; margin: 10px">
+<div class="mx-auto" style="width: 80%; margin-top: 10px">
     <div class="card">
       <div class="card-body">
             {% if post.dtype == "jpg" %}
                 <img src="data:image/jpg;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
             {% else %}
-                <img src="data:image/png;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
+                <img src="data:image/png;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block" alt="">
             {% endif %}
-          <h4 style="margin-top: 7px;">{{post.text}}</h4>
+          <h5 style="margin-top: 7px;">{{post.text}}</h5>
           <a class="btn btn-outline-dark" href="/add_comment/{{post.id}}">Write a comment or read them</a>
       </div>
     </div>
