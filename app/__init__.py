@@ -16,6 +16,3 @@ login_manager.init_app(app)
 
 from .views import *
 db.create_all()
-
-from app.blueprints import *
-app.register_blueprint(jobs)
