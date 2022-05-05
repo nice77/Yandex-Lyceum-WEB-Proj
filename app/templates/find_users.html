@@ -2,7 +2,7 @@
 
 {% block content %}
 {% if db.query.filter(db.nickname.like("%" + name + "%")).all() and current_user.nickname != name %}
-    {% for i in db.query.filter_by(db.nickname.like("%" + name + "%")).all() %}
+    {% for i in db.query.filter(db.nickname.like("%" + name + "%")).all() %}
     <div class="mx-auto" style="width: 80%;">
         <div class="card spec">
           <div class="card-body">
