@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="mx-auto" style="width: 80%;">
+    <div class="card spec">
+      <div class="card-body">
+        {% if current_user.avatar_dtype == "jpg" %}
+            <img src="data:image/jpg;base64,{{ current_user.avatar }}" class="img-fluid" style="margin-bottom: 5px;">
+        {% else %}
+            <img src="data:image/png;base64,{{ current_user.avatar }}" class="img-fluid" style="margin-bottom: 5px;">
+        {% endif %}
+        <h5>@{{current_user.nickname}}</h5>
+        <h5>Followers: {{ db.query.filter_by(account=current_user.id).count() }}</h5>
+        <h5>Followees: {{ db.query.filter_by(followee=current_user.id).count() }}</h5>
+        <a class="btn btn-outline-light" href="/change_avatar">Change the avatar</a>
+      </div>
+    </div>
+  </div>
+
+  {% for post in posts.query.filter_by(user=current_user.id) %}
+  <div class="mx-auto" style="width: 80%; margin-top: 10px;">
+    <div class="card spec">
+      <div class="card-body">
+        <h5>{{current_user.nickname}}</h5>
+        {% if post.dtype == "jpg" %}
+            <img src="data:image/jpg;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
+        {% else %}
+            <img src="data:image/png;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block" alt="">
+        {% endif %}
+        <h5 style="margin-top: 7px;">{{post.text}}</h5>
+        <a class="btn btn-outline-light" href="/add_comment/{{post.id}}">Write a comment or read them</a>
+        <a class="btn btn-outline-light" href="/delete_post/{{post.id}}">Delete this post</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+{% endblock %}

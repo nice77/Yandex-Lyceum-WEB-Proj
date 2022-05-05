@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mx-auto" style="width: 80%;">
+    <div class="card spec">
+      <div class="card-body">
+          {% if user.avatar_dtype == "jpg" %}
+            <img src="data:image/jpg;base64,{{ user.avatar }}" class="img-fluid" style="margin-bottom: 5px;">
+          {% else %}
+            <img src="data:image/png;base64,{{ user.avatar }}" class="img-fluid" style="margin-bottom: 5px;">
+          {% endif %}
+          <h5>{{ user.nickname }}</h5>
+          <h5>Name: {{ user.name }}</h5>
+          {% if current_user.is_authenticated and current_user.nickname != user.nickname %}
+              {% if not db.query.filter_by(followee=current_user.id, account=user.id).first() %}
+              <a class="btn btn-outline-light" href="/subscribe/{{user.id}}">Subscribe</a>
+              {% else %}
+              <a class="btn btn-outline-light" href="/unsubscribe/{{user.id}}">Unsubscribe</a>
+              {% endif %}
+          {% endif %}
+      </div>
+    </div>
+</div>
+{% for post in posts.query.filter_by(user=user_id).all() %}
+<div class="mx-auto" style="width: 80%; margin-top: 10px">
+    <div class="card spec">
+      <div class="card-body">
+            {% if post.dtype == "jpg" %}
+                <img src="data:image/jpg;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
+            {% else %}
+                <img src="data:image/png;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block" alt="">
+            {% endif %}
+          <h5 style="margin-top: 7px;">{{post.text}}</h5>
+          <a class="btn btn-outline-light" href="/add_comment/{{post.id}}">Write a comment or read them</a>
+      </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

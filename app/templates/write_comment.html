@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="mx-auto" style="width: 80%;">
+    <div class="card spec text-white">
+        <div class="card-body">
+            <h5>{{db.query.filter_by(id=post.user).first().nickname}}</h5>
+            {% if post.dtype == "jpg" %}
+                <img src="data:image/jpg;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
+            {% else %}
+                <img src="data:image/png;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
+            {% endif %}
+            {{post.text}}
+            <h1>New post</h1>
+            <form action="" method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.text.label }}<br>
+                    {{ form.text(class="form-control") }}<br>
+                    {% for error in form.text.errors %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                </p>
+                <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+                <div>{{ message }}</div>
+            </form>
+            {% for c in comments.query.filter_by(post_id=post_id) %}
+            <div>
+                <h4><a href="/other_user/{{db.query.filter_by(id=c.user_id).first().id}}">@{{db.query.filter_by(id=c.user_id).first().nickname}}</a></h4>
+                <p>{{c.text}}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
