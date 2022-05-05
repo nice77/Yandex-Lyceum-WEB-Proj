@@ -129,6 +129,7 @@ def commentator(post_id):
         db.session.commit()
         return redirect(f'/add_comment/{post_id}')
     post = Post.query.filter_by(id=post_id).first()
+    print(post)
     return render_template('write_comment.html', form=comment, title='Write a comment', post=post, db=User,
                            comments=Comment, post_id=post_id)
 
@@ -137,7 +138,8 @@ def commentator(post_id):
 @login_required
 def deleter(post_id):
     db.session.delete(Post.query.filter_by(id=post_id).first())
-    db.session.delete(Comment.query.filter_by(post_id=post_id))
+    db.session.delete(Comment.query.filter_by(post_id=post_id).all())
+    print(Comment.query.filter_by(post_id=post_id).all())
     db.session.commit()
     return redirect('/profile')
 
