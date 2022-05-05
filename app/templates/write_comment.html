@@ -11,8 +11,7 @@
             {% else %}
                 <img src="data:image/png;base64,{{ post.data }}" class="img-fluid rounded mx-auto d-block">
             {% endif %}
-            {{post.text}}
-            <h1>New post</h1>
+            <h4>{{post.text}}</h4>
             <form action="" method="post" enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
                 <p>
