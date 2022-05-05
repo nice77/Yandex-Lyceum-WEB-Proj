@@ -138,7 +138,8 @@ def commentator(post_id):
 @login_required
 def deleter(post_id):
     db.session.delete(Post.query.filter_by(id=post_id).first())
-    db.session.delete(Comment.query.filter_by(post_id=post_id).all())
+    while Comment.query.filter_by(post_id=post_id).all():
+        db.session.delete(Comment.query.filter_by(post_id=post_id).first())
     print(Comment.query.filter_by(post_id=post_id).all())
     db.session.commit()
     return redirect('/profile')
